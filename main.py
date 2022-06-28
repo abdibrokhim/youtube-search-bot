@@ -11,9 +11,6 @@ import argparse
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-# DEVELOPER_KEY = 'AIzaSyAu3lbrWAoQcfQ-j5eR2efxw2D5jS1Behk'
-# YOUTUBE_API_SERVICE_NAME = 'youtube'
-# YOUTUBE_API_VERSION = 'v3'
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -53,8 +50,8 @@ def search(update: Update, context: CallbackContext):
         ).execute()
 
         videos = []
-        channels = []
-        playlists = []
+        # channels = []
+        # playlists = []
 
         # Add each result to the appropriate list, and then display the lists of
         # matching videos, channels, and playlists.
@@ -62,20 +59,20 @@ def search(update: Update, context: CallbackContext):
             if search_result['id']['kind'] == 'youtube#video':
                 videos.append(
                     '%s \n https://youtu.be/%s' % (search_result['snippet']['title'],
-                                                                              search_result['id']['videoId']))
-            elif search_result['id']['kind'] == 'youtube#channel':
-                channels.append('%s https://youtu.be/%s' % (search_result['snippet']['title'],
-                                             search_result['id']['channelId']))
-            elif search_result['id']['kind'] == 'youtube#playlist':
-                playlists.append('%s https://youtu.be/%s' % (search_result['snippet']['title'],
-                                              search_result['id']['playlistId']))
+                                                   search_result['id']['videoId']))
+            # elif search_result['id']['kind'] == 'youtube#channel':
+            #     channels.append('%s https://youtu.be/%s' % (search_result['snippet']['title'],
+            #                                  search_result['id']['channelId']))
+            # elif search_result['id']['kind'] == 'youtube#playlist':
+            #     playlists.append('%s https://youtu.be/%s' % (search_result['snippet']['title'],
+            #                                   search_result['id']['playlistId']))
 
         print('Videos:\n', '\n\n'.join(videos), '\n')
         result_videos = 'Videos:\n', '\n\n'.join(videos), '\n'
-        print('Channels:\n', '\n\n'.join(channels), '\n')
-        result_channels = 'Channels:\n', '\n\n'.join(channels), '\n'
-        print('Playlists:\n', '\n\n'.join(playlists), '\n')
-        result_playlists = 'Playlists:\n', '\n\n'.join(playlists), '\n'
+        # print('Channels:\n', '\n\n'.join(channels), '\n')
+        # result_channels = 'Channels:\n', '\n\n'.join(channels), '\n'
+        # print('Playlists:\n', '\n\n'.join(playlists), '\n')
+        # result_playlists = 'Playlists:\n', '\n\n'.join(playlists), '\n'
 
         logging.info('result from YouTube API')
 
@@ -87,21 +84,21 @@ def search(update: Update, context: CallbackContext):
             update.message \
                 .reply_text('no video was found')
 
-        if len(result_channels):
-            for i in result_channels:
-                update.message \
-                    .reply_text(i)
-        else:
-            update.message \
-                .reply_text('no channel was found')
-
-        if len(result_playlists):
-            for i in result_playlists:
-                update.message \
-                    .reply_text(i)
-        else:
-            update.message \
-                .reply_text('no playlist was found')
+        # if len(result_channels):
+        #     for i in result_channels:
+        #         update.message \
+        #             .reply_text(i)
+        # else:
+        #     update.message \
+        #         .reply_text('no channel was found')
+        #
+        # if len(result_playlists):
+        #     for i in result_playlists:
+        #         update.message \
+        #             .reply_text(i)
+        # else:
+        #     update.message \
+        #         .reply_text('no playlist was found')
 
 
 dispatcher = updater.dispatcher
